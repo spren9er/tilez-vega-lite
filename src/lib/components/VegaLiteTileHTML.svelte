@@ -13,6 +13,9 @@
 
 	$: if ($specs && $element) {
 		const vl = new VegaLite(data, spec, $specs.width, $specs.height);
-		vegaEmbed($element as HTMLElement, vl.spec, { ...vl.options, ...options });
+		vegaEmbed($element as HTMLElement, vl.spec, {
+			config: vl.options,
+			...options,
+		});
 	}
 </script>
