@@ -1,9 +1,6 @@
-import { tableFromJSON } from 'apache-arrow';
-
 import { VegaLite } from '$lib/vegaLite';
 
-// demo: vega-lite can deal with arrow table, not just JSON
-const data = tableFromJSON([
+const data = [
   { a: 'A', b: 28 },
   { a: 'B', b: 55 },
   { a: 'C', b: 43 },
@@ -13,7 +10,7 @@ const data = tableFromJSON([
   { a: 'G', b: 19 },
   { a: 'H', b: 87 },
   { a: 'I', b: 52 },
-]);
+];
 
 const spec = {
   mark: 'bar',
