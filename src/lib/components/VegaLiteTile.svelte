@@ -3,6 +3,7 @@
 
 	import VegaLiteTileHTML from './VegaLiteTileHTML.svelte';
 	import VegaLiteTileSVG from './VegaLiteTileSVG.svelte';
+	import VegaLiteTileCanvas from './VegaLiteTileCanvas.svelte';
 
 	const { specs } = getTileContext();
 
@@ -11,8 +12,9 @@
 	export let options: { [key: string]: unknown } | undefined = undefined;
 
 	const typeMapping = {
-		svg: VegaLiteTileSVG,
 		html: VegaLiteTileHTML,
+		svg: VegaLiteTileSVG,
+		canvas: VegaLiteTileCanvas,
 	};
 
 	function componentFor(type: string) {
@@ -21,7 +23,7 @@
 				`There is no vega-lite tile available for type '${type}'!`,
 			);
 
-		return typeMapping[type as 'svg' | 'html'];
+		return typeMapping[type as 'html' | 'svg' | 'canvas'];
 	}
 </script>
 

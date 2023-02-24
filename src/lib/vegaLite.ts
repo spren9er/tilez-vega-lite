@@ -19,10 +19,21 @@ export class VegaLite {
   }
 
   public async render() {
-    const spec = compile(this.vegaSpec, { config: this.vegaOptions }).spec;
-    const view = new View(parse(spec), { renderer: 'none' }).finalize();
+    const view = this.buildView();
 
     return await view.toSVG();
+  }
+
+  public async renderToCanvas(context: CanvasRenderingContext2D) {
+    const view = this.buildView();
+
+    context.save();
+
+    await view.toCanvas(window.devicePixelRatio, {
+      externalContext: context,
+    });
+
+    context.restore();
   }
 
   public get spec() {
@@ -31,6 +42,11 @@ export class VegaLite {
 
   public get options() {
     return this.vegaOptions;
+  }
+
+  private buildView() {
+    const spec = compile(this.vegaSpec, { config: this.vegaOptions }).spec;
+    return new View(parse(spec), { renderer: 'none' }).finalize();
   }
 
   private buildSpec(spec: GenericSpec, data: unknown) {

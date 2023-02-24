@@ -13,11 +13,11 @@ npm install tilez-vega-lite
 
 ## Usage
 
-You can use _Vega-Lite_ tiles for tile types `'html'` and `'svg'`. Component **VegaLiteTile** has following props:
+You can use _Vega-Lite_ tiles for tile types `'html'`, `'svg'` and `'canvas'`. Component **VegaLiteTile** has following props:
 
-- data: given data as JSON, Apache Arrow table, etc.
-- spec: _Vega-Lite_ spec
-- options [optional]: _Vega-Lite_ configuration settings
+- **_data:_** given data as JSON, Apache Arrow table, etc.
+- **_spec:_** _Vega-Lite_ spec
+- **_options [optional]:_** _Vega-Lite_ configuration
 
 ```html
 <script lang="ts">
@@ -45,7 +45,6 @@ You can use _Vega-Lite_ tiles for tile types `'html'` and `'svg'`. Component **V
   };
 
   const options = {
-    renderer: 'canvas',
     actions: false
   }
 </script>
@@ -54,5 +53,8 @@ You can use _Vega-Lite_ tiles for tile types `'html'` and `'svg'`. Component **V
   <VegaLiteTile {data} {spec} {options} />
 </Tile>
 ```
+
+Several _Vega-Lite_ tiles can't share a single canvas element, there will be rendering issues.
+Thus, _Vega-Lite_ tiles of type `'canvas'` are only working for leaf tiles.
 
 _**Note:** Underlying `VegaLite` object can also be used for server side rendering without **_tilez_**, see `ssr` routes in example app._
