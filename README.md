@@ -15,9 +15,9 @@ npm install tilez-vega-lite
 
 You can use _Vega-Lite_ tiles for tile types `'html'`, `'svg'` and `'canvas'`. Component **VegaLiteTile** has following props:
 
-- **_data:_** given data as JSON, Apache Arrow table, etc.
-- **_spec:_** _Vega-Lite_ spec
-- **_options [optional]:_** _Vega-Lite_ configuration
+- **_data_** given data as JSON, Apache Arrow table, etc.
+- **_spec_** _Vega-Lite_ spec
+- **_options_** _Vega-Lite_ configuration [optional]
 
 ```html
 <script lang="ts">
@@ -49,12 +49,14 @@ You can use _Vega-Lite_ tiles for tile types `'html'`, `'svg'` and `'canvas'`. C
   }
 </script>
 
-<Tile width="800px" height="600px" type="html">
+<Tile type="html" width="800px" height="600px">
   <VegaLiteTile {data} {spec} {options} />
 </Tile>
 ```
 
-Several _Vega-Lite_ tiles can't share a single canvas element, there will be rendering issues.
-Thus, _Vega-Lite_ tiles of type `'canvas'` are only working for leaf tiles.
+_**Note:** Several _Vega-Lite_ tiles can't share a single canvas element, there will be rendering issues.
+Thus, _Vega-Lite_ tiles of type `'canvas'` are only working for tiles, where parent tile is not of type `'canvas'`._
 
-_**Note:** Underlying `VegaLite` object can also be used for server side rendering without **_tilez_**, see `ssr` routes in example app._
+## SSR
+
+Underlying **VegaLite** object can also be used for server side rendering without **_tilez_**, see `ssr` routes in example app.
