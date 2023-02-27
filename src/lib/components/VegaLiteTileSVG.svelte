@@ -5,15 +5,18 @@
 
 	const { specs } = getTileContext();
 
+	type json = { [key: string]: unknown | json };
+
 	export let data: unknown;
-	export let spec: { [key: string]: unknown };
-	export let options: { [key: string]: unknown } | undefined = undefined;
+	export let spec: json;
+	export let options: json | undefined = undefined;
 
 	let chart: string;
 
 	$: if (!$specs?.hasEmptySize)
 		(async () => {
 			const vl = new VegaLite(data, spec, $specs.width, $specs.height, options);
+
 			chart = (await vl.render()) as string;
 		})();
 </script>

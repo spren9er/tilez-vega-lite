@@ -46,6 +46,7 @@ export class VegaLite {
 
   private buildView() {
     const spec = compile(this.vegaSpec, { config: this.vegaOptions }).spec;
+
     return new View(parse(spec), { renderer: 'none' }).finalize();
   }
 

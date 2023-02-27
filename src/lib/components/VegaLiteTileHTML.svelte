@@ -7,15 +7,30 @@
 
 	const { specs, element } = getTileContext();
 
+	type json = { [key: string]: unknown | json };
+
 	export let data: unknown;
-	export let spec: { [key: string]: unknown };
-	export let options: { [key: string]: unknown } | undefined = undefined;
+	export let spec: json;
+	export let options: json | undefined = undefined;
 
 	$: if ($specs && $element) {
 		const vl = new VegaLite(data, spec, $specs.width, $specs.height);
-		vegaEmbed($element as HTMLElement, vl.spec, {
-			config: vl.options,
+
+		// eslint-disable-next-line
+		const { continuousWidth, continuousHeight } = vl.options.view!;
+
+		options = {
 			...options,
-		});
+			config: {
+				...(options?.config || {}),
+				view: {
+					...((options?.config as json)?.view || {}),
+					continuousWidth,
+					continuousHeight,
+				},
+			},
+		};
+
+		vegaEmbed($element as HTMLElement, vl.spec, options);
 	}
 </script>
