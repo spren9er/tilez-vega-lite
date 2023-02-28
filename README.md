@@ -1,6 +1,6 @@
 # ![Tilez-Logo](https://github.com/spren9er/tilez/blob/main/docs/images/tilez_logo.svg?raw=true) tilez - vega-lite
 
-_Vega-Lite_ tiles for usage with Svelte layout engine [**_tilez_**](https://github.com/spren9er/tilez).
+_Vega-Lite_ tile for usage with Svelte layout engine [**_tilez_**](https://github.com/spren9er/tilez).
 
 
 ## Installation
@@ -13,7 +13,7 @@ npm install tilez-vega-lite
 
 ## Usage
 
-You can use _Vega-Lite_ tiles for tile types `'html'`, `'svg'` and `'canvas'`. Component **VegaLiteTile** has following props:
+You can use _Vega-Lite_ tile for tile types `'html'`, `'svg'` and `'canvas'`. Component **VegaLiteTile** has following props:
 
 - **_data_** given data as JSON, Apache Arrow table, etc.
 - **_spec_** _Vega-Lite_ spec

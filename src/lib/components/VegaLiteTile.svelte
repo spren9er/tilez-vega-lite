@@ -22,7 +22,7 @@
 	function componentFor(type: string) {
 		if (!Object.keys(typeMapping).includes(type))
 			throw new Error(
-				`There is no vega-lite tile available for type '${type}'!`,
+				`There is no Vega-Lite tile available for type '${type}'!`,
 			);
 
 		return typeMapping[type as 'html' | 'svg' | 'canvas'];
