@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Config } from 'vega-lite';
+
 	import { getTileContext } from 'tilez';
 
 	import { VegaLite } from '$lib/vegaLite';
@@ -9,7 +11,7 @@
 
 	export let data: unknown;
 	export let spec: json;
-	export let options: json | undefined = undefined;
+	export let options: Config | undefined = undefined;
 
 	let chart: string;
 

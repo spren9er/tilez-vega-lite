@@ -1,6 +1,6 @@
 {
   "name": "tilez-vega-lite",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Torsten Sprenger <mail@spren9er.de>",
   "description": "Vega-Lite for Svelte layout engine tilez",
   "keywords": [

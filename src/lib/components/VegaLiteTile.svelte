@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Config } from 'vega-lite';
+
 	import { getTileContext } from 'tilez';
 
 	import VegaLiteTileHTML from './VegaLiteTileHTML.svelte';
@@ -11,7 +13,7 @@
 
 	export let data: unknown;
 	export let spec: json;
-	export let options: json | undefined = undefined;
+	export let options: json | Config | undefined = undefined;
 
 	const typeMapping = {
 		html: VegaLiteTileHTML,
@@ -27,8 +29,19 @@
 
 		return typeMapping[type as 'html' | 'svg' | 'canvas'];
 	}
+
+	function optionsFor(type: string) {
+		if (type === 'html') return options;
+
+		return (options as json)?.config;
+	}
 </script>
 
 {#if $specs}
-	<svelte:component this={componentFor($specs.type)} {data} {spec} {options} />
+	<svelte:component
+		this={componentFor($specs.type)}
+		{data}
+		{spec}
+		options={optionsFor($specs.type)}
+	/>
 {/if}
