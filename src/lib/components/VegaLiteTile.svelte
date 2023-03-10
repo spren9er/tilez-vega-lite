@@ -1,47 +1,31 @@
 <script lang="ts">
-	import type { Config } from 'vega-lite';
+	import type { Config, TopLevelSpec } from 'vega-lite';
+	import type { EmbedOptions } from 'vega-embed';
 
 	import { getTileContext } from 'tilez';
 
 	import VegaLiteTileHTML from './VegaLiteTileHTML.svelte';
 	import VegaLiteTileSVG from './VegaLiteTileSVG.svelte';
-	import VegaLiteTileCanvas from './VegaLiteTileCanvas.svelte';
 
 	const { specs } = getTileContext();
 
-	type json = { [key: string]: unknown | json };
+	export let spec: TopLevelSpec;
+	export let data: unknown | undefined = undefined;
+	export let options: EmbedOptions | undefined = undefined;
 
-	export let data: unknown;
-	export let spec: json;
-	export let options: json | Config | undefined = undefined;
+	const { type } = $specs;
 
-	const typeMapping = {
-		html: VegaLiteTileHTML,
-		svg: VegaLiteTileSVG,
-		canvas: VegaLiteTileCanvas,
-	};
-
-	function componentFor(type: string) {
-		if (!Object.keys(typeMapping).includes(type))
-			throw new Error(
-				`There is no Vega-Lite tile available for type '${type}'!`,
-			);
-
-		return typeMapping[type as 'html' | 'svg' | 'canvas'];
+	if (!['html', 'svg'].includes(type)) {
+		throw new Error(`There is no Vega-Lite tile available for type '${type}'!`);
 	}
 
-	function optionsFor(type: string) {
-		if (type === 'html') return options;
+	let config: Config | undefined;
 
-		return (options as json)?.config;
-	}
+	if (type === 'svg') config = options?.config as Config | undefined;
 </script>
 
-{#if $specs}
-	<svelte:component
-		this={componentFor($specs.type)}
-		{data}
-		{spec}
-		options={optionsFor($specs.type)}
-	/>
+{#if type === 'html'}
+	<VegaLiteTileHTML {spec} {data} {options} />
+{:else}
+	<VegaLiteTileSVG {spec} {data} {config} />
 {/if}

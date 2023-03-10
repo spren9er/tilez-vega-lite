@@ -7,22 +7,32 @@ _Vega-Lite_ tile for usage with Svelte layout engine [**_tilez_**](https://githu
 
 Install **_tilez-vega-lite_** as npm package via
 
-```
+```bash
 npm install tilez-vega-lite
 ```
 
 ## Usage
 
-You can use _Vega-Lite_ tile for tile types `'html'`, `'svg'` and `'canvas'`. Component **VegaLiteTile** has following props:
+You can use _Vega-Lite_ tile for tile types `'html'` and `'svg'`. Component **VegaLiteTile** has following props:
 
-- **_data_** given data as JSON, Apache Arrow table, etc.
 - **_spec_** _Vega-Lite_ spec
+- **_data_** given data as JSON, Apache Arrow table, etc. [optional]
 - **_options_** _Vega-Lite_ configuration [optional]
+
+When no **_data_** is given, _Vega-Lite_ **_spec_** must have inline data.
 
 ```html
 <script lang="ts">
   import { Tile } from 'tilez';
   import { VegaLiteTile } from 'tilez-vega-lite';
+
+  const spec = {
+    mark: 'bar',
+    encoding: {
+      x: { field: 'a', type: 'nominal', axis: { labelAngle: 0 } },
+      y: { field: 'b', type: 'quantitative' }
+    }
+  };
 
   const data = [
     { a: 'A', b: 28 },
@@ -36,27 +46,18 @@ You can use _Vega-Lite_ tile for tile types `'html'`, `'svg'` and `'canvas'`. Co
     { a: 'I', b: 52 }
   ];
 
-  const spec = {
-    mark: 'bar',
-    encoding: {
-      x: { field: 'a', type: 'nominal', axis: { labelAngle: 0 } },
-      y: { field: 'b', type: 'quantitative' }
-    }
-  };
 
   const options = {
+    renderer: 'svg',
     actions: false
-  }
+  };
 </script>
 
 <Tile type="html" width="800px" height="600px">
-  <VegaLiteTile {data} {spec} {options} />
+  <VegaLiteTile {spec} {data} {options} />
 </Tile>
 ```
 
-_**Note:** Several _Vega-Lite_ tiles can't share a single canvas element, there will be rendering issues.
-Thus, _Vega-Lite_ tiles of type `'canvas'` are only working for tiles, where parent tile is not of type `'canvas'`._
-
 ## SSR
 
-Underlying **VegaLite** object can also be used for server side rendering without **_tilez_**, see `ssr` routes in example app.
+Underlying **VegaLite** class can also be used for server side rendering without **_tilez_**, see `ssr` route in example app.

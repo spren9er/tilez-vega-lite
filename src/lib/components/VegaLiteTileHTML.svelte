@@ -1,30 +1,33 @@
 <script lang="ts">
-	import { getTileContext } from 'tilez';
+	import type { Config, TopLevelSpec } from 'vega-lite';
+	import type { EmbedOptions } from 'vega-embed';
 
 	import vegaEmbed from 'vega-embed';
+
+	import { getTileContext } from 'tilez';
 
 	import { VegaLite } from '$lib/vegaLite';
 
 	const { specs, element } = getTileContext();
 
-	type json = { [key: string]: unknown | json };
-
-	export let data: unknown;
-	export let spec: json;
-	export let options: json | undefined = undefined;
+	export let spec: TopLevelSpec;
+	export let data: unknown | undefined = undefined;
+	export let options: EmbedOptions | undefined = undefined;
 
 	$: if ($specs && $element) {
-		const vl = new VegaLite(data, spec, $specs.width, $specs.height);
+		const vl = new VegaLite(spec, $specs.width, $specs.height, data);
 
 		// eslint-disable-next-line
 		const { continuousWidth, continuousHeight } = vl.options.view!;
 
+		const config = (options?.config as Config) || {};
+
 		options = {
 			...options,
 			config: {
-				...(options?.config || {}),
+				...config,
 				view: {
-					...((options?.config as json)?.view || {}),
+					...(config?.view || {}),
 					continuousWidth,
 					continuousHeight,
 				},

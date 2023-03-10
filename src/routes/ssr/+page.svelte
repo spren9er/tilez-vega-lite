@@ -1,5 +1,7 @@
 <script lang="ts">
-	export let data: { chart: string };
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 </script>
 
-{@html data.chart}
+{@html data.svg}

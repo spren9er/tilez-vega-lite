@@ -1,3 +1,7 @@
+import type { PageServerLoad } from './$types';
+
+import type { TopLevelSpec } from 'vega-lite';
+
 import { VegaLite } from '$lib/vegaLite';
 
 const data = [
@@ -12,7 +16,8 @@ const data = [
   { a: 'I', b: 52 },
 ];
 
-const spec = {
+const spec: TopLevelSpec = {
+  data: { values: data },
   mark: 'bar',
   encoding: {
     x: { field: 'a', type: 'nominal', axis: { labelAngle: 0 } },
@@ -20,9 +25,12 @@ const spec = {
   },
 };
 
-export async function load() {
-  const vl = new VegaLite(data, spec, 400, 300);
-  const chart = await vl.render();
+export const load: PageServerLoad = async ({ fetch }) => {
+  const response = await fetch('/vl_theme.json');
+  const theme = await response.json();
 
-  return { chart };
-}
+  const chart = new VegaLite(spec, 400, 300, null, theme);
+  const svg = await chart.render();
+
+  return { svg };
+};

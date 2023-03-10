@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Config } from 'vega-lite';
+	import type { Config, TopLevelSpec } from 'vega-lite';
 
 	import { getTileContext } from 'tilez';
 
@@ -7,22 +7,26 @@
 
 	const { specs } = getTileContext();
 
-	type json = { [key: string]: unknown | json };
+	export let spec: TopLevelSpec;
+	export let data: unknown | undefined = undefined;
+	export let config: Config | undefined = undefined;
 
-	export let data: unknown;
-	export let spec: json;
-	export let options: Config | undefined = undefined;
+	let svg: string;
 
-	let chart: string;
-
-	$: if (!$specs?.hasEmptySize)
+	$: if ($specs)
 		(async () => {
-			const vl = new VegaLite(data, spec, $specs.width, $specs.height, options);
+			const chart = new VegaLite(
+				spec,
+				$specs.width,
+				$specs.height,
+				data,
+				config,
+			);
 
-			chart = (await vl.render()) as string;
+			svg = (await chart.render()) as string;
 		})();
 </script>
 
-{#if chart}
-	{@html chart}
+{#if svg}
+	{@html svg}
 {/if}

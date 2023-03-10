@@ -1,0 +1,88 @@
+{
+  "background": "#ffffff",
+  "font": "Source Sans Pro",
+  "title": {
+    "fontSize": 20,
+    "color": "#333333",
+    "fontWeight": "bold",
+    "subtitleFontWeight": "plain",
+    "subtitleFontSize": 16,
+    "subtitleColor": "#333333",
+    "subtitleLineHeight": 20,
+    "anchor": "middle",
+    "align": "center",
+    "dy": -10
+  },
+  "padding": 20,
+  "view": {
+    "strokeWidth": 0
+  },
+  "mark": {
+    "color": "#ff534e"
+  },
+  "line": {
+    "size": 0.8
+  },
+  "concat": {
+    "spacing": 30
+  },
+  "facet": {
+    "spacing": 30
+  },
+  "style": {
+    "guide-title": {
+      "fontSize": 12,
+      "fill": "#333333",
+      "fontWeight": "bold"
+
+    },
+    "guide-label": {
+      "fontSize": 12,
+      "fill": "#777777"
+    }
+  },
+  "axis": {
+    "domain": true,
+    "domainColor": "#777777",
+    "domainWidth": 0.35,
+    "titleFontWeight": 600,
+    "titlePadding": 12,
+    "labelPadding": 3,
+    "labelFlush": false,
+    "labelFontSize": 11,
+    "tickWidth": 0.35,
+    "tickColor": "#777777",
+    "tickSize": 5,
+    "tickOffset": 0,
+    "gridColor": "#dedede",
+    "gridWidth": 0.35
+  },
+  "axisX": {
+    "labelBaseline": "top",
+    "labelAngle": 0
+  },
+  "axisY": {
+    "labelBaseline": "middle"
+  },
+  "legend": {
+    "padding": 1,
+    "labelColor": "#777777",
+    "labelFontSize": 11,
+    "rowPadding": 5
+  },
+  "range": {
+    "category": [
+      "#f5b901",
+      "#ff8706",
+      "#ff534e",
+      "#fe43bc",
+      "#9a91fa",
+      "#c988d2",
+      "#6da5c2",
+      "#5fa73f",
+      "#499989",
+      "#176785",
+      "#223e15"
+    ]
+  }
+}
