@@ -1,32 +1,38 @@
 <script lang="ts">
-	import type { Config, TopLevelSpec } from 'vega-lite';
+  import type { Config, TopLevelSpec } from 'vega-lite';
 
-	import { getTileContext } from 'tilez';
+  import { getTileContext } from 'tilez';
 
-	import { VegaLite } from '$lib/vegaLite';
+  import { VegaLite } from '$lib/vegaLite';
 
-	const { specs } = getTileContext();
+  const { specs } = getTileContext();
 
-	export let spec: TopLevelSpec;
-	export let data: unknown | undefined = undefined;
-	export let config: Config | undefined = undefined;
+  interface Props {
+    spec: TopLevelSpec;
+    data?: unknown | undefined;
+    config?: Config | undefined;
+  }
 
-	let svg: string;
+  let { spec, data = undefined, config = undefined }: Props = $props();
 
-	$: if ($specs)
-		(async () => {
-			const chart = new VegaLite(
-				spec,
-				$specs.width,
-				$specs.height,
-				data,
-				config,
-			);
+  let svg: string | undefined = $state();
 
-			svg = (await chart.render()) as string;
-		})();
+  $effect(() => {
+    if ($specs)
+      (async () => {
+        const chart = new VegaLite(
+          spec,
+          $specs.width,
+          $specs.height,
+          data,
+          config,
+        );
+
+        svg = (await chart.render()) as string;
+      })();
+  });
 </script>
 
 {#if svg}
-	{@html svg}
+  {@html svg}
 {/if}

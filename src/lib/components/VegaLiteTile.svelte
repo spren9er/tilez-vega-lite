@@ -1,31 +1,32 @@
 <script lang="ts">
-	import type { Config, TopLevelSpec } from 'vega-lite';
-	import type { EmbedOptions } from 'vega-embed';
+  import type { Config, TopLevelSpec } from 'vega-lite';
+  import type { EmbedOptions } from 'vega-embed';
 
-	import { getTileContext } from 'tilez';
+  import { getTileContext } from 'tilez';
 
-	import VegaLiteTileHTML from './VegaLiteTileHTML.svelte';
-	import VegaLiteTileSVG from './VegaLiteTileSVG.svelte';
+  import VegaLiteTileHTML from './VegaLiteTileHTML.svelte';
+  import VegaLiteTileSVG from './VegaLiteTileSVG.svelte';
 
-	const { specs } = getTileContext();
+  const { specs } = getTileContext();
 
-	export let spec: TopLevelSpec;
-	export let data: unknown | undefined = undefined;
-	export let options: EmbedOptions | undefined = undefined;
+  interface Props {
+    spec: TopLevelSpec;
+    data?: unknown | undefined;
+    options?: EmbedOptions | undefined;
+  }
 
-	const { type } = $specs;
+  let { spec, data = undefined, options = undefined }: Props = $props();
 
-	if (!['html', 'svg'].includes(type)) {
-		throw new Error(`There is no Vega-Lite tile available for type '${type}'!`);
-	}
+  // Validation of type
+  const { type } = $specs;
+  if (!['html', 'svg'].includes(type))
+    throw new Error(`No Vega-Lite tile available for type '${type}'!`);
 
-	let config: Config | undefined;
-
-	if (type === 'svg') config = options?.config as Config | undefined;
+  const config = type === 'svg' ? (options?.config as Config) : undefined;
 </script>
 
 {#if type === 'html'}
-	<VegaLiteTileHTML {spec} {data} {options} />
+  <VegaLiteTileHTML {spec} {data} {options} />
 {:else}
-	<VegaLiteTileSVG {spec} {data} {config} />
+  <VegaLiteTileSVG {spec} {data} {config} />
 {/if}
